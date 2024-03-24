@@ -7,7 +7,7 @@ public class NotDiia
     public List<DocumentListItem> Documents { get; set; }
 
     public int CurrentIndex = 0;
-
+    
     public IDisplayableDocument? CurrentDocument => Documents.Find(item => item.Position == CurrentIndex)?.Document; 
 
     private int NextIndex(int index) => (index + 1) % Documents.Count;
@@ -71,5 +71,4 @@ public class NotDiia
     public void ShowInfo() => CurrentDocument?.ShowInfo();
     public void HideInfo() => CurrentDocument?.HideInfo();
     public void GenerateQR() => (CurrentDocument as IQRСodeGeneratable)?.GenerateQR();
-    
 }
