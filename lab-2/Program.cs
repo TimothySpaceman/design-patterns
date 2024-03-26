@@ -1,5 +1,6 @@
 ﻿using lab_2.FactoryMethod;
 using lab_1.AbstractFactory;
+using lab_1.Singleton;
 
 //Factory Method
 Console.WriteLine("Factory method");
@@ -20,6 +21,17 @@ Console.WriteLine(appleMonitor);
 
 //Singleton
 Console.WriteLine();
+Console.WriteLine("Singleton");
 
+var authA = Authenticator.GetInstance();
+var authB = Authenticator.GetInstance();
+
+var thread = new Thread(() =>
+{
+    var authC = Authenticator.GetInstance();
+    Console.WriteLine("Instance A " + (authA==authC ? "==" : "!=") +" Instance C");
+});
+Console.WriteLine("Instance A " + (authA==authB ? "==" : "!=") +" Instance B");
+thread.Start();
 
 Console.ReadLine();
