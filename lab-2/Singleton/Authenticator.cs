@@ -1,4 +1,4 @@
-﻿namespace lab_1.Singleton;
+﻿namespace lab_2.Singleton;
 
 public sealed class Authenticator //"sealed" prevents the inheritance 
 {

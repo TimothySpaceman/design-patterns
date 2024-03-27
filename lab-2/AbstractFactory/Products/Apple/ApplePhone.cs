@@ -1,4 +1,4 @@
-﻿namespace lab_1.AbstractFactory;
+﻿namespace lab_2.AbstractFactory;
 
 public class ApplePhone : IPhone
 {
