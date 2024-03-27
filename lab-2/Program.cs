@@ -1,5 +1,6 @@
 ﻿using lab_2.FactoryMethod;
 using lab_2.AbstractFactory;
+using lab_2.Builder;
 using lab_2.Prototype;
 using lab_2.Singleton;
 
@@ -42,6 +43,18 @@ Console.WriteLine("a2: \n" + a2.GetString());
 Console.WriteLine("\na1 " + (a1 == a2 ? "==" : "!=") + " a2");
 
 
+//Builder
+Console.WriteLine();
+Console.WriteLine("Builder");
+
+var director = new CharacterDirector();
+var niceGuy = director.GetNiceGuy("Happy guy with a guitar");
+var badGuy = director.GetBadGuy("The one who hates nice guy's purpose and power");
+
+Console.WriteLine("Nice Guy:\n" + niceGuy);
+Console.WriteLine("Bad Guy:\n" + badGuy);
+
+
 //Singleton
 Console.WriteLine();
 Console.WriteLine("Singleton");
@@ -54,6 +67,7 @@ var thread = new Thread(() =>
     var authC = Authenticator.GetInstance();
     Console.WriteLine("Instance A " + (authA==authC ? "==" : "!=") +" Instance C");
 });
+
 Console.WriteLine("Instance A " + (authA==authB ? "==" : "!=") +" Instance B");
 thread.Start();
 
