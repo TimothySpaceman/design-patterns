@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using lab_3.Adapter;
 using lab_3.Bridge;
+using lab_3.Composite;
 using lab_3.Decorator;
 using lab_3.Proxy;
 
@@ -53,3 +54,24 @@ ITextReader textChecker = new SmartTextChecker(textReaderLocker);
 
 textChecker.ReadFile("./log.txt");
 textChecker.ReadFile("./lab-3.dll");
+
+
+// Composite
+Console.WriteLine();
+Console.WriteLine("Composite");
+
+var lis = new List<LightNode>
+{
+    new LightElementNode("li", false, true, null, new List<LightNode>{new LightTextNode("Adapter")}),
+    new LightElementNode("li", false, true, null, new List<LightNode>{new LightTextNode("Decorator")}),
+    new LightElementNode("li", false, true, null, new List<LightNode>{new LightTextNode("Bridge")}),
+    new LightElementNode("li", false, true, null, new List<LightNode>{new LightTextNode("Proxy")}),
+    new LightElementNode("li", false, true, new List<string>{"highlight"}, new List<LightNode>{new LightTextNode("Composite")}),
+    new LightElementNode("li", false, true, null, new List<LightNode>{new LightTextNode("FlyWeight")})
+};
+var ul = new LightElementNode("ul", false, true, new List<string>{"patterns-list"}, lis);
+var title = new LightElementNode("h2", true, true, null, new List<LightNode>{new LightTextNode("Design Patterns")});
+var image = new LightElementNode("img", false, false, new List<string>{"patterns-image"});
+var div = new LightElementNode("div", false, true, new List<string>{"container", "bg-red"}, new List<LightNode>{image, title, ul});
+
+Console.WriteLine(div.OuterHTML());
