@@ -1,6 +1,8 @@
-﻿using lab_3.Adapter;
+﻿using System.Text.RegularExpressions;
+using lab_3.Adapter;
 using lab_3.Bridge;
 using lab_3.Decorator;
+using lab_3.Proxy;
 
 // Adatper
 Console.WriteLine("Adapter");
@@ -39,3 +41,15 @@ BitmapGraphicsEngine bitmapEngine = new BitmapGraphicsEngine(triangle);
 
 Console.WriteLine(vectorEngine.Render());
 Console.WriteLine(bitmapEngine.Render());
+
+
+// Proxy
+Console.WriteLine();
+Console.WriteLine("Proxy");
+
+ITextReader textReader = new SmartTextReader();
+ITextReader textReaderLocker = new SmartTextReaderLocker(textReader, "\\.dll$");
+ITextReader textChecker = new SmartTextChecker(textReaderLocker);
+
+textChecker.ReadFile("./log.txt");
+textChecker.ReadFile("./lab-3.dll");
