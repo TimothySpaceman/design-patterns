@@ -1,6 +1,8 @@
 ﻿using lab_4.ChainOfResponsibility.Handlers;
 using lab_4.Mediator;
 using lab_4.Observer;
+using lab_4.Strategy.ImageStrategy;
+using lab_4.Strategy.Nodes;
 
 // Chain of Responsibility
 Console.WriteLine("Chain of Responsibility");
@@ -42,8 +44,8 @@ a3.Land();
 Console.WriteLine("Observer");
 
 var label = new LightElementNode("label", false, true, new List<string>{"pretty-label"}, new List<LightNode> { new LightTextNode("Click me!") });
-var div = new LightElementNode("div", false, true, new List<string>{"container", "bg-red"}, new List<LightNode>{label});
-var body = new LightElementNode("body", false, true, null, new List<LightNode>{div});
+var labelDiv = new LightElementNode("div", false, true, new List<string>{"container", "bg-red"}, new List<LightNode>{label});
+var body = new LightElementNode("body", false, true, null, new List<LightNode>{labelDiv});
 
 void LabelClick(Event eventInstance)
 {
@@ -59,9 +61,19 @@ void DivClick(Event eventInstance)
 }
 
 label.AddListener("click", LabelClick);
-div.AddListener("click", DivClick);
+labelDiv.AddListener("click", DivClick);
 
 Console.WriteLine(body.OuterHTML());
 
-div.OnClick((4, 12), 0);
+labelDiv.OnClick((4, 12), 0);
 label.OnClick((15, 21), 0);
+
+
+// Strategy 
+Console.WriteLine("Strategy");
+
+var imgLocal = new Img("../assets/strategy.png");
+var imgWeb = new Img("https://images.com/strategy.png");
+
+var imgDiv = new lab_4.Strategy.LightElementNode("div", false, true, null, new List<lab_4.Strategy.LightNode>{imgLocal, imgWeb});
+Console.WriteLine(imgDiv.OuterHTML());
