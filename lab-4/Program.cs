@@ -1,5 +1,6 @@
 ﻿using lab_4.ChainOfResponsibility.Handlers;
 using lab_4.Mediator;
+using lab_4.Memento;
 using lab_4.Observer;
 using lab_4.Strategy.ImageStrategy;
 using lab_4.Strategy.Nodes;
@@ -77,3 +78,28 @@ var imgWeb = new Img("https://images.com/strategy.png");
 
 var imgDiv = new lab_4.Strategy.LightElementNode("div", false, true, null, new List<lab_4.Strategy.LightNode>{imgLocal, imgWeb});
 Console.WriteLine(imgDiv.OuterHTML());
+
+
+// Memento 
+Console.WriteLine("Memento");
+
+var editor = new Editor();
+editor.Input("Hello");
+Console.WriteLine(editor.Message.Text);
+editor.Input(" word!");
+Console.WriteLine(editor.Message.Text);
+editor.Backspace(6);
+Console.WriteLine(editor.Message.Text);
+editor.Input("world!");
+Console.WriteLine(editor.Message.Text);
+editor.Undo();
+Console.WriteLine(editor.Message.Text);
+editor.Input(" world!");
+Console.WriteLine(editor.Message.Text);
+editor.Undo();
+Console.WriteLine(editor.Message.Text);
+editor.Redo();
+Console.WriteLine(editor.Message.Text);
+
+
+
