@@ -19,12 +19,13 @@ var div2 = new Div(new List<string> { "bg-red", "bg-red" }, new List<LightNode>
     new P(new List<string> { "fg-darkred" }, "5")
 });
 
-Console.WriteLine(body.OuterHTML() + "\n");
-var append = body.Append(div2);
-Console.WriteLine(body.OuterHTML() + "\n");
-append.Undo();
-Console.WriteLine(body.OuterHTML() + "\n");
-body.Append("Not the best example of the Command pattern, but... Anyway");
-Console.WriteLine(body.OuterHTML() + "\n");
 body.Append(div1, div2);
+body.SetDisplayState(new CollapsedState());
+
+Console.WriteLine(body.OuterHTML() + "\n");
+body.AddClass("new-class");
+Console.WriteLine(body.OuterHTML() + "\n");
+body.ToggleClass("new-class");
+Console.WriteLine(body.OuterHTML() + "\n");
+body.ToggleClass("new-class");
 Console.WriteLine(body.OuterHTML() + "\n");

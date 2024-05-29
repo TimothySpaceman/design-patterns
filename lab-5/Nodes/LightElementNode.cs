@@ -72,6 +72,27 @@ public class LightElementNode : LightNode
         return command;
     }
     
+    public AddClassCommand AddClass(string className)
+    {
+        var command = new AddClassCommand(this, className);
+        command.Execute();
+        return command;
+    }
+    
+    public RemoveClassCommand RemoveClass(string className)
+    {
+        var command = new RemoveClassCommand(this, className);
+        command.Execute();
+        return command;
+    }
+    
+    public ToggleClassCommand ToggleClass(string className)
+    {
+        var command = new ToggleClassCommand(this, className);
+        command.Execute();
+        return command;
+    }
+    
     public void AddListener(string eventName, Action<Event> listener)
     {
         EventManager.AddListener(eventName, listener);
