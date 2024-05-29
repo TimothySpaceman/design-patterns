@@ -27,6 +27,7 @@ public class AppendCommand : ICommand
         foreach (var item in Items)
         {
             Target.Children.Add(item);
+            item.Parent = Target;
         }
     }
 
@@ -35,6 +36,7 @@ public class AppendCommand : ICommand
         foreach (var item in Items)
         {
             Target.Children.Remove(item);
+            item.Parent = null;
         }
     }
 }

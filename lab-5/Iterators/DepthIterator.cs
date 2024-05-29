@@ -5,7 +5,7 @@ namespace lab_5.Iterators;
 public class DepthIterator: INodeIterator
 {
     public List<LightNode> Nodes = new List<LightNode>();
-    public int CurrentIndex = 0;
+    public int CurrentIndex = -1;
 
     public DepthIterator(LightNode root)
     {
@@ -34,6 +34,7 @@ public class DepthIterator: INodeIterator
             return null;
         }
 
-        return Nodes[CurrentIndex++];
+        CurrentIndex += 1;
+        return Nodes[CurrentIndex];
     }
 }

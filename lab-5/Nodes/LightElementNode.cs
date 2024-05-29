@@ -10,12 +10,26 @@ public class LightElementNode : LightNode
     public bool IsPaired { get; }
     public List<string> CssClasses { get; }
     public List<LightNode> Children { get; }
-    public LightElementNode Parent { get; set; }
     public int ChildrenCount => Children.Count;
 
     public EventManager EventManager = new EventManager();
     
     public INodeDisplayState DisplayState;
+    
+    public LightElementNode(string tag, bool isInline = true, bool isPaired = false, List<string>? cssClasses = null, List<LightNode>? children = null, bool collapsed = false)
+    {
+        Tag = tag;
+        IsInline = isInline;
+        IsPaired = isPaired;
+        CssClasses = cssClasses ?? new List<string>();
+        Children = children ?? new List<LightNode>();
+        foreach (var child in Children)
+        {
+            child.Parent = this;
+        }
+
+        DisplayState = collapsed ? new CollapsedState() : new ExpandedState();
+    }
     
     public override string InnerHTML(int childLevel = 0)
     {
@@ -43,21 +57,6 @@ public class LightElementNode : LightNode
     public string ClosingTag()
     {
         return IsPaired ? $"</{Tag}>" : "";
-    }
-
-    public LightElementNode(string tag, bool isInline = true, bool isPaired = false, List<string>? cssClasses = null, List<LightNode>? children = null, bool collapsed = false)
-    {
-        Tag = tag;
-        IsInline = isInline;
-        IsPaired = isPaired;
-        CssClasses = cssClasses ?? new List<string>();
-        Children = children ?? new List<LightNode>();
-        foreach (var child in Children.OfType<LightElementNode>())
-        {
-            (child).Parent = this;
-        }
-
-        DisplayState = collapsed ? new CollapsedState() : new ExpandedState();
     }
 
     public void SetDisplayState(INodeDisplayState state)
