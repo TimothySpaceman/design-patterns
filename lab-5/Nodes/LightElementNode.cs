@@ -1,4 +1,5 @@
-﻿using lab_5.Events;
+﻿using lab_5.Commands;
+using lab_5.Events;
 
 namespace lab_5.Nodes;
 
@@ -62,6 +63,34 @@ public class LightElementNode : LightNode
     public void SetDisplayState(INodeDisplayState state)
     {
         DisplayState = state;
+    }
+
+    public AppendCommand Append(params object[] items)
+    {
+        var command = new AppendCommand(this, items);
+        command.Execute();
+        return command;
+    }
+    
+    public AddClassCommand AddClass(string className)
+    {
+        var command = new AddClassCommand(this, className);
+        command.Execute();
+        return command;
+    }
+    
+    public RemoveClassCommand RemoveClass(string className)
+    {
+        var command = new RemoveClassCommand(this, className);
+        command.Execute();
+        return command;
+    }
+    
+    public ToggleClassCommand ToggleClass(string className)
+    {
+        var command = new ToggleClassCommand(this, className);
+        command.Execute();
+        return command;
     }
     
     public void AddListener(string eventName, Action<Event> listener)
