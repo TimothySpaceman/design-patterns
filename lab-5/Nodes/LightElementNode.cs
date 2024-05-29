@@ -9,16 +9,16 @@ public class LightElementNode : LightNode
     public bool IsPaired { get; }
     public List<string> CssClasses { get; }
     public List<LightNode> Children { get; }
-
     public LightElementNode Parent { get; set; }
-    
     public int ChildrenCount => Children.Count;
 
     public EventManager EventManager = new EventManager();
     
+    public INodeDisplayState DisplayState;
+    
     public override string InnerHTML(int childLevel = 0)
     {
-        return !IsPaired ? "" : Children.Aggregate("", (current, child) => current + child.OuterHTML(childLevel + 1) + (IsInline ? "" : "\n"));
+        return DisplayState.InnerHTML(this, childLevel);
     }
 
     public override string OuterHTML(int childLevel = 0)
@@ -26,7 +26,7 @@ public class LightElementNode : LightNode
         var padding = new string(' ', childLevel * 4);
         
         var result = padding + OpeningTag();
-        result += (IsInline ? "" : "\n") + InnerHTML(childLevel);
+        result += InnerHTML(childLevel);
         result += padding + ClosingTag();
         return result;
     }
@@ -44,7 +44,7 @@ public class LightElementNode : LightNode
         return IsPaired ? $"</{Tag}>" : "";
     }
 
-    public LightElementNode(string tag, bool isInline = true, bool isPaired = false, List<string>? cssClasses = null, List<LightNode>? children = null)
+    public LightElementNode(string tag, bool isInline = true, bool isPaired = false, List<string>? cssClasses = null, List<LightNode>? children = null, bool collapsed = false)
     {
         Tag = tag;
         IsInline = isInline;
@@ -55,6 +55,13 @@ public class LightElementNode : LightNode
         {
             (child).Parent = this;
         }
+
+        DisplayState = collapsed ? new CollapsedState() : new ExpandedState();
+    }
+
+    public void SetDisplayState(INodeDisplayState state)
+    {
+        DisplayState = state;
     }
     
     public void AddListener(string eventName, Action<Event> listener)

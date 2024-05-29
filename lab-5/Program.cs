@@ -19,9 +19,6 @@ var body = new Body(new List<string>{"border-double"}, new List<LightNode>
     })
 });
 
-var iterator = new DepthIterator(body);
-
-Console.WriteLine($"Root: {iterator.Next()?.OuterHTML()}");
-Console.WriteLine($"Next: {iterator.Next()?.OuterHTML()}");
-Console.WriteLine($"Next: {iterator.Next()?.OuterHTML()}");
-Console.WriteLine($"Next: {iterator.Next()?.OuterHTML()}");
+Console.WriteLine(body.OuterHTML());
+body.SetDisplayState(new CollapsedState());
+Console.WriteLine(body.OuterHTML());
