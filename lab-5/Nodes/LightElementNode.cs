@@ -25,14 +25,23 @@ public class LightElementNode : LightNode
     {
         var padding = new string(' ', childLevel * 4);
         
-        var result = padding + $"<{Tag}";
+        var result = padding + OpeningTag();
+        result += (IsInline ? "" : "\n") + InnerHTML(childLevel);
+        result += padding + ClosingTag();
+        return result;
+    }
+
+    public string OpeningTag()
+    {
+        var result = $"<{Tag}";
         result += CssClasses.Count != 0 ? " class=\"" + string.Join(" ", CssClasses.ToArray()) + "\"" : "";
         result += IsPaired ? ">" : "/>";
-        if(!IsPaired) return result;
-        
-        result += (IsInline ? "" : "\n") + InnerHTML(childLevel);
-        result += IsPaired ? $"{padding}</{Tag}>" : "";
         return result;
+    }
+
+    public string ClosingTag()
+    {
+        return IsPaired ? $"</{Tag}>" : "";
     }
 
     public LightElementNode(string tag, bool isInline = true, bool isPaired = false, List<string>? cssClasses = null, List<LightNode>? children = null)
